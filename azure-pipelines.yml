@@ -27,7 +27,7 @@ jobs:
   steps:
   - script: |
       echo Add other tasks to build, test, and deploy your project.
-      python3 ./test_secret.py
+      python ./test_secret.py
     displayName: 'Run a multi-line script'
     env: 
       MYSECRET: $(pipeline-secret)
@@ -38,7 +38,7 @@ jobs:
   steps:
   - script: |
       echo Add other tasks to build, test, and deploy your project.
-      python3 ./test_secret.py
+      python ./test_secret.py
     displayName: 'Run a multi-line script'
     env: 
       MYSECRET: $(pipeline-secret)

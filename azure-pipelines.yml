@@ -6,16 +6,52 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'Ubuntu-16.04'
+jobs:
+- job: linux
+  pool:
+    vmImage: 'Ubuntu-16.04'
+  steps:
+  - script: echo Hello, world!
+    displayName: 'Run a one-line script'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+  - script: |
+      echo Add other tasks to build, test, and deploy your project.
+      python3 ./test_secret.py
+    displayName: 'Run a multi-line script'
+    env: 
+      MYSECRET: $(pipeline-secret)
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    python3 ./test_secret.py
-  displayName: 'Run a multi-line script'
-  env: 
-    MYSECRET: $(pipeline-secret)
+- job: windows-vs2017-win2016
+  pool:
+    vmImage: 'vs2017-win2016'
+  steps:
+  - script: |
+      echo Add other tasks to build, test, and deploy your project.
+      python3 ./test_secret.py
+    displayName: 'Run a multi-line script'
+    env: 
+      MYSECRET: $(pipeline-secret)
+
+- job: windows-vs2017-win2016
+  pool:
+    vmImage: 'vs2017-win2016'
+  steps:
+  - script: |
+      echo Add other tasks to build, test, and deploy your project.
+      python3 ./test_secret.py
+    displayName: 'Run a multi-line script'
+    env: 
+      MYSECRET: $(pipeline-secret)
+
+- job: windows-vs2015-win2012r2
+  pool:
+    vmImage: 'vs2015-win2012r2'
+  steps:
+  - script: |
+      echo Add other tasks to build, test, and deploy your project.
+      python3 ./test_secret.py
+    displayName: 'Run a multi-line script'
+    env: 
+      MYSECRET: $(pipeline-secret)
+
+

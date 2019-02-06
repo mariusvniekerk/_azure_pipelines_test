@@ -34,7 +34,7 @@ jobs:
   
   - script: |
       pip install winregistry
-      python ./test_secret.py
+      python ./test_registry.py
     displayName: 'Fetch some registry keys'     
 
 - job: windows_vs2015_win2012r2

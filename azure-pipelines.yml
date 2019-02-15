@@ -66,7 +66,8 @@ jobs:
   - script: |
       sudo apt-get install qemu binfmt-support qemu-user-static
 
-  - script: ./run_docker_build.sh
+  - script: |
+      ./run_docker_build.sh
     displayName: Run docker build
     
   

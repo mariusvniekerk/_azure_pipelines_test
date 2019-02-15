@@ -36,8 +36,7 @@ DOCKER_IMAGE="jjhelmus/debug_cf_aarch64:qemu_3.1.0"
 DOCKER_RUN_ARGS=" "
 
 export UPLOAD_PACKAGES="${UPLOAD_PACKAGES:-True}"
-docker run ${DOCKER_RUN_ARGS} \
-           -e HOST_USER_ID=0 \
+docker run --privileged ${DOCKER_RUN_ARGS} \
            -v "${FEEDSTOCK_ROOT}":/home/conda/feedstock_root:rw,z \
            $DOCKER_IMAGE \
            /home/conda/feedstock_root/${PROVIDER_DIR}/build_steps_root.sh

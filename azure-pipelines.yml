@@ -48,4 +48,22 @@ jobs:
     env: 
       MYSECRET: $(pipeline-secret)
 
-
+- job: aarch64_sudo_test
+  pool:
+    vmImage: 'Ubuntu-16.04'
+  steps:
+  - script: |
+      sudo pip install --upgrade pip
+      sudo pip install setuptools shyaml
+    displayName: Install dependencies
+  # configure qemu binfmt-misc running.  This allows us to run docker containers 
+  # embedded qemu-static
+  - script: |
+      docker run --rm --privileged multiarch/qemu-user-static:register
+      ls /proc/sys/fs/binfmt_misc/
+    displayName: Configure binfmt_misc
+  
+  - script: ./run_as_root.sh
+    displayName: Run docker build
+    
+  

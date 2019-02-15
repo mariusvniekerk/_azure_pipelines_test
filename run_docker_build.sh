@@ -24,6 +24,8 @@ if hash docker-machine 2> /dev/null && docker-machine active > /dev/null; then
     export HOST_USER_ID=$(docker-machine ssh $(docker-machine active) id -u)
 fi
 
+export HOST_USER_ID=0
+
 #pip install shyaml
 DOCKER_IMAGE="condaforge/linux-anvil-aarch64"
 
@@ -35,10 +37,11 @@ DOCKER_RUN_ARGS=" "
 
 export UPLOAD_PACKAGES="${UPLOAD_PACKAGES:-True}"
 docker run ${DOCKER_RUN_ARGS} \
-           -v "${FEEDSTOCK_ROOT}":/home/conda/feedstock_root:rw,z \
-           $DOCKER_IMAGE \
-           bash \
-           /home/conda/feedstock_root/${PROVIDER_DIR}/build_steps.sh
+        -e HOST_USER_ID=${HOST_USER_ID} \
+        -v "${FEEDSTOCK_ROOT}":/home/conda/feedstock_root:rw,z \
+        $DOCKER_IMAGE \
+        bash \
+        /home/conda/feedstock_root/${PROVIDER_DIR}/build_steps.sh
 
 # verify that the end of the script was reached
 #test -f "$DONE_CANARY"

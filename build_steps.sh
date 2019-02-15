@@ -20,13 +20,25 @@ conda-build:
 CONDARC
 
 # debugging
+echo "id"
+id -u
+echo "whomai"
 whoami
+echo "lscpu"
 lscpu
+echo "uname -a"
 uname -a
 #file /usr/bin/sudo
 echo "Running sudo"
 /usr/bin/sudo -l -U conda 2>&1 > capture || true
 cat capture
+
+echo "Trying yum without sudo"
+yum install -y libX11-devel 2>&1 > capture || true
+cat capture
+
+echo "Trying yum with sudo"
+
 /usr/bin/sudo yum install -y libX11-devel
 echo "Done with sudo"
 

@@ -21,6 +21,22 @@ jobs:
     env: 
       MYSECRET: $(pipeline-secret)
 
+- job: Vs2019-Server2019
+  pool:
+    vmImage: 'Vs2019-Server2019'
+  steps:
+  - script: |
+      echo Add other tasks to build, test, and deploy your project.
+      python ./test_secret.py
+    displayName: 'Run a multi-line script'
+    env: 
+      MYSECRET: $(pipeline-secret)
+  
+  - script: |
+      pip install winregistry
+      python ./test_registry.py
+    displayName: 'Fetch some registry keys'     
+
 - job: windows_vs2017_win2016
   pool:
     vmImage: 'vs2017-win2016'

@@ -21,7 +21,7 @@ jobs:
     env: 
       MYSECRET: $(pipeline-secret)
 
-- job: Vs2019-Server2019
+- job: Vs2019_Server2019
   pool:
     name: Hosted Windows 2019 with VS2019
   steps:

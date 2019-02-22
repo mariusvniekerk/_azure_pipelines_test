@@ -23,7 +23,7 @@ jobs:
 
 - job: Vs2019-Server2019
   pool:
-    vmImage: 'Vs2019-Server2019'
+    vmImage: Hosted Windows 2019 with VS2019
   steps:
   - script: |
       echo Add other tasks to build, test, and deploy your project.

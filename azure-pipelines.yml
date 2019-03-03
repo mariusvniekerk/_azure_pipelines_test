@@ -36,6 +36,9 @@ jobs:
   pool:
     name: Hosted Windows 2019 with VS2019
   steps:
+  - script: WMIC CPU Get /Format:List
+    displayName: cpu info
+    
   - script: |
       echo Add other tasks to build, test, and deploy your project.
       python ./test_secret.py
@@ -52,6 +55,9 @@ jobs:
   pool:
     vmImage: 'vs2017-win2016'
   steps:
+  - script: WMIC CPU Get /Format:List
+    displayName: cpu info
+
   - script: |
       echo Add other tasks to build, test, and deploy your project.
       python ./test_secret.py
@@ -72,6 +78,9 @@ jobs:
   pool:
     vmImage: 'vs2015-win2012r2'
   steps:
+  - script: WMIC CPU Get /Format:List
+    displayName: cpu info
+
   - script: |
       echo Add other tasks to build, test, and deploy your project.
       python ./test_secret.py

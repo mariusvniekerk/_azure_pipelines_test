@@ -13,7 +13,10 @@ jobs:
   steps:
   - script: echo Hello, world!
     displayName: 'Run a one-line script'
-
+  
+  - script: lscpu
+    displayName: cpu info
+    
   - script: |
       echo Add other tasks to build, test, and deploy your project.
       python3 ./test_secret.py

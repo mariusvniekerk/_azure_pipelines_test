@@ -11,6 +11,9 @@ jobs:
   pool:
     vmImage: 'Ubuntu-16.04'
   steps:
+  - script: env
+    displayName: 'Print env variables'
+
   - script: echo Hello, world!
     displayName: 'Run a one-line script'
   

@@ -88,6 +88,9 @@ jobs:
   pool:
     vmImage: 'vs2015-win2012r2'
   steps:
+  - script: SET
+    displayName: env variables
+
   - script: WMIC CPU Get /Format:List
     displayName: cpu info
 

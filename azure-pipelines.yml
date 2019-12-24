@@ -88,6 +88,8 @@ jobs:
     displayName: Dir some things C:\Program Files (x86)
     
   - powershell: |
+        Set-PSDebug -Trace 1
+
         Function InstallVS
         {
             Param
@@ -103,15 +105,19 @@ jobs:
             $FilePath = "${env:Temp}\vs_$Sku.exe"
             $Arguments = ('/c', $FilePath, $WorkLoads, '--quiet', '--norestart', '--wait', '--nocache' )
 
+            Write-Host "Starting Install ..."
+            $process = Start-Process -FilePath cmd.exe -ArgumentList $Arguments -Wait -PassThru
+            $exitCode = $process.ExitCode
+
             if ($exitCode -eq 0 -or $exitCode -eq 3010)
             {
-            Write-Host -Object 'Installation successful'
-            return $exitCode
+              Write-Host -Object 'Installation successful'
+              return $exitCode
             }
             else
             {
-            Write-Host -Object "Non zero exit code returned by the installation process : $exitCode."
-            exit $exitCode
+              -Host -Object "Non zero exit code returned by the installation process : $exitCode."
+              exit $exitCode
             }
         }
 

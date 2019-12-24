@@ -88,6 +88,8 @@ jobs:
     displayName: Dir some things C:\Program Files (x86)
     
   - powershell: |
+        using namespace System.Collections.Generic
+        
         Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
         Install-Module VSSetup -Scope CurrentUser -Force
 

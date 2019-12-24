@@ -88,19 +88,17 @@ jobs:
     displayName: Dir some things C:\Program Files (x86)
     
   - powershell: |
-        using namespace System.Collections.Generic
-        
         Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
         Install-Module VSSetup -Scope CurrentUser -Force
 
         Function InstalledPackages {
-            [OutputType([HashSet[String]])]
+            [OutputType([System.Collections.Generic.HashSet[String]])]
             Param
             (
               [String] $InstallPath
             )
             
-            $Packages = New-Object HashSet[String]
+            $Packages = New-Object System.Collections.Generic.HashSet[String]
             $x = (Get-VSSetupInstance $InstallPath | Select-VSSetupInstance).Packages.ForEach({$Packages.Add($_.Id)})
             
             Write-Host -Object "Number of packages installed:"
@@ -114,8 +112,8 @@ jobs:
         {
             Param
             (
-                [String]$WorkLoads,
-                [String]$Sku,
+                [String] $WorkLoads,
+                [String] $Sku,
                 [String] $VSBootstrapperURL
             )
 

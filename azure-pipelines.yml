@@ -87,8 +87,7 @@ jobs:
       dir "C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\"
     displayName: Dir some things C:\Program Files (x86)
     
-  - displayName: Try to update vs2017
-    powershell: |
+  - powershell: |
         Function InstallVS
         {
             Param
@@ -123,6 +122,7 @@ jobs:
         $exitCode = InstallVS -WorkLoads $WorkLoads -Sku $Sku -VSBootstrapperURL $VSBootstrapperURL
 
         exit $exitCode
+    displayName: Try to update vs2017 
 
 - job: windows_vs2015_win2012r2
   pool:

@@ -88,6 +88,8 @@ jobs:
     displayName: Dir some things C:\Program Files (x86)
     
   - powershell: |
+        Set-PSDebug -Trace 1
+        
         # Get details about current packages
         Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
         Install-Module VSSetup -Scope CurrentUser -Force
@@ -95,8 +97,6 @@ jobs:
         
         $PackagesPre = New-Object System.Collections.Generic.HashSet[String]
         $x = (Get-VSSetupInstance $InstallPath  | Select-VSSetupInstance).Packages.ForEach({$PackagesPre.Add($_.Id)})
-  
-        Set-PSDebug -Trace 1
 
         Function InstallVS
         {

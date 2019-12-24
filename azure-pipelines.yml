@@ -89,8 +89,8 @@ jobs:
     
   - powershell: |
         # Get details about current packages
-        Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201
-        Install-Module VSSetup -Scope CurrentUser
+        Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+        Install-Module VSSetup -Scope CurrentUser - Force
         $InstallPath = 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise'
         
         $PackagesPre = New-Object System.Collections.Generic.HashSet[String]

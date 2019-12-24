@@ -139,7 +139,7 @@ jobs:
         $x = (Get-VSSetupInstance $InstallPath  | Select-VSSetupInstance).Packages.ForEach({$PackagesPost.Add($_.Id)})
         
         Write-Host -Object 'Additional packages installed'
-        $PackagesPost.ExceptWith(@PackagesPre) | sort-object | write-host
+        $PackagesPost.ExceptWith($PackagesPre) | sort-object | write-host
 
         exit $exitCode
     displayName: Try to update vs2017 

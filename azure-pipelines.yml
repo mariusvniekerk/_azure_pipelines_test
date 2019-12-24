@@ -100,7 +100,7 @@ jobs:
             $Packages = New-Object System.Collections.Generic.HashSet[String]
             (Get-VSSetupInstance $InstallPath | Select-VSSetupInstance).Packages.ForEach({$Packages.Add($_.Id)})
             
-            White-Host -Object "Number of packages installed:"
+            Write-Host -Object "Number of packages installed:"
             Write-Host -Object $Packages.Count
             return $Packages
         }

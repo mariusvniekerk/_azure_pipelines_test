@@ -92,17 +92,20 @@ jobs:
         Install-Module VSSetup -Scope CurrentUser -Force
 
         Function InstalledPackages {
+            [OutputType([HashSet[String]])]
             Param
             (
               [String] $InstallPath
             )
             
-            $Packages = New-Object System.Collections.Generic.HashSet[String]
-            (Get-VSSetupInstance $InstallPath | Select-VSSetupInstance).Packages.ForEach({$Packages.Add($_.Id)})
+            $Packages = New-Object HashSet[String]
+            $x = (Get-VSSetupInstance $InstallPath | Select-VSSetupInstance).Packages.ForEach({$Packages.Add($_.Id)})
             
             Write-Host -Object "Number of packages installed:"
-            Write-Host -Object $Packages.Count
-            return $Packages
+            Write-Host -Object $Packages.Count\
+            
+            # This is how you return the true object, weird
+            return ,$Packages
         }
 
         Function InstallVS
@@ -151,7 +154,9 @@ jobs:
         $PackagesPost = InstalledPackages -InstallPath $InstallPath
         
         Write-Host -Object 'Additional packages installed'
-        $PackagesPost.ExceptWith($PackagesPre) | sort-object | write-host
+        # This modified the set
+        $PackagesPost.ExceptWith($PackagesPre)
+        $PackagesPost | Sort-Object | Write-Host
 
         exit $exitCode
     displayName: Try to update vs2017 

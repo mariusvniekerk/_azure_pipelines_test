@@ -88,15 +88,22 @@ jobs:
     displayName: Dir some things C:\Program Files (x86)
     
   - powershell: |
-        Set-PSDebug -Trace 2
-        
-        # Get details about current packages
         Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
         Install-Module VSSetup -Scope CurrentUser -Force
-        $InstallPath = 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise'
-        
-        $PackagesPre = New-Object System.Collections.Generic.HashSet[String]
-        $x = (Get-VSSetupInstance $InstallPath  | Select-VSSetupInstance).Packages.ForEach({$PackagesPre.Add($_.Id)})
+
+        Function InstalledPackages {
+            Param
+            (
+              [String] $InstallPath
+            )
+            
+            $Packages = New-Object System.Collections.Generic.HashSet[String]
+            (Get-VSSetupInstance $InstallPath | Select-VSSetupInstance).Packages.ForEach({$Packages.Add($_.Id)})
+            
+            White-Host -Object "Number of packages installed:"
+            Write-Host -Object $Packages.Count
+            return $Packages
+        }
 
         Function InstallVS
         {
@@ -111,7 +118,7 @@ jobs:
             Invoke-WebRequest -Uri $VSBootstrapperURL -OutFile "${env:Temp}\vs_$Sku.exe"
 
             $FilePath = "${env:Temp}\vs_$Sku.exe"
-            $Arguments = ('/c', $FilePath, $WorkLoads, '--quiet', '--norestart', '--wait')
+            $Arguments = ('/c', $FilePath, $WorkLoads, '--quiet', '--norestart', '--wait', '--nocache' )
 
             Write-Host "Starting Install ..."
             $process = Start-Process -FilePath cmd.exe -ArgumentList $Arguments -Wait -PassThru
@@ -124,10 +131,14 @@ jobs:
             }
             else
             {
-              -Host -Object "Non zero exit code returned by the installation process : $exitCode."
-              exit $exitCode
+              Write-Host -Object "Non zero exit code returned by the installation process : "
+              Write-Host -Object $exitCode
+              return $exitCode
             }
         }
+
+        Write-Host "Determining installed packages ..."
+        $PackagesPre = InstalledPackages -InstallPath $InstallPath
         
         $WorkLoads = 'modify --installPath "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise" --add Microsoft.VisualCpp.PGO.X64'
         $Sku = 'Enterprise'
@@ -135,8 +146,8 @@ jobs:
 
         $exitCode = InstallVS -WorkLoads $WorkLoads -Sku $Sku -VSBootstrapperURL $VSBootstrapperURL
         
-        $PackagesPost = New-Object System.Collections.Generic.HashSet[String]
-        $x = (Get-VSSetupInstance $InstallPath  | Select-VSSetupInstance).Packages.ForEach({$PackagesPost.Add($_.Id)})
+        Write-Host "Determining installed packages after installation ..."
+        $PackagesPost = InstalledPackages -InstallPath $InstallPath
         
         Write-Host -Object 'Additional packages installed'
         $PackagesPost.ExceptWith($PackagesPre) | sort-object | write-host

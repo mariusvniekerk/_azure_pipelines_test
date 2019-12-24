@@ -137,10 +137,11 @@ jobs:
             }
         }
 
+        $InstallPath = "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise"
         Write-Host "Determining installed packages ..."
         $PackagesPre = InstalledPackages -InstallPath $InstallPath
         
-        $WorkLoads = 'modify --installPath "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise" --add Microsoft.VisualCpp.PGO.X64'
+        $WorkLoads = "modify --installPath ""$InstallPath"" --add Microsoft.VisualCpp.PGO.X64"
         $Sku = 'Enterprise'
         $VSBootstrapperURL = 'https://aka.ms/vs/15/release/vs_enterprise.exe'
 

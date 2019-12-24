@@ -88,6 +88,14 @@ jobs:
     displayName: Dir some things C:\Program Files (x86)
     
   - powershell: |
+        # Get details about current packages
+        Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201
+        Install-Module VSSetup -Scope CurrentUser
+        $InstallPath = 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise'
+        
+        $PackagesPre = New-Object System.Collections.Generic.HashSet[String]
+        $x = (Get-VSSetupInstance $InstallPath  | Select-VSSetupInstance).Packages.ForEach({$PackagesPre.Add($_.Id)})
+  
         Set-PSDebug -Trace 1
 
         Function InstallVS
@@ -103,7 +111,7 @@ jobs:
             Invoke-WebRequest -Uri $VSBootstrapperURL -OutFile "${env:Temp}\vs_$Sku.exe"
 
             $FilePath = "${env:Temp}\vs_$Sku.exe"
-            $Arguments = ('/c', $FilePath, $WorkLoads, '--quiet', '--norestart', '--wait', '--nocache' )
+            $Arguments = ('/c', $FilePath, $WorkLoads, '--quiet', '--norestart', '--wait', )
 
             Write-Host "Starting Install ..."
             $process = Start-Process -FilePath cmd.exe -ArgumentList $Arguments -Wait -PassThru
@@ -120,12 +128,18 @@ jobs:
               exit $exitCode
             }
         }
-
+        
         $WorkLoads = 'modify --installPath "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise" --add Microsoft.VisualCpp.PGO.X64'
         $Sku = 'Enterprise'
         $VSBootstrapperURL = 'https://aka.ms/vs/15/release/vs_enterprise.exe'
 
         $exitCode = InstallVS -WorkLoads $WorkLoads -Sku $Sku -VSBootstrapperURL $VSBootstrapperURL
+        
+        $PackagesPost = New-Object System.Collections.Generic.HashSet[String]
+        $x = (Get-VSSetupInstance $InstallPath  | Select-VSSetupInstance).Packages.ForEach({$PackagesPost.Add($_.Id)})
+        
+        Write-Host -Object 'Additional packages installed'
+        $PackagesPost.ExceptWith(@PackagesPre) | sort-object | write-host
 
         exit $exitCode
     displayName: Try to update vs2017 

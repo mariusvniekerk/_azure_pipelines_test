@@ -102,7 +102,7 @@ jobs:
             $x = (Get-VSSetupInstance $InstallPath | Select-VSSetupInstance).Packages.ForEach({$Packages.Add($_.Id)})
             
             Write-Host -Object "Number of packages installed:"
-            Write-Host -Object $Packages.Count\
+            Write-Host -Object $Packages.Count
             
             # This is how you return the true object, weird
             return ,$Packages

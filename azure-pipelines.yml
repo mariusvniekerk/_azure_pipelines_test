@@ -87,7 +87,8 @@ jobs:
       dir "C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\"
     displayName: Dir some things C:\Program Files (x86)
     
-  - script: |
+  - displayName: Try to update vs2017
+    powershell: |
         Function InstallVS
         {
             Param

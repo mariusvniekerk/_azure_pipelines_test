@@ -86,6 +86,42 @@ jobs:
   - script:
       dir "C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\"
     displayName: Dir some things C:\Program Files (x86)
+    
+  - script: |
+        Function InstallVS
+        {
+            Param
+            (
+                [String]$WorkLoads,
+                [String]$Sku,
+                [String] $VSBootstrapperURL
+            )
+
+            Write-Host "Downloading Bootstrapper ..."
+            Invoke-WebRequest -Uri $VSBootstrapperURL -OutFile "${env:Temp}\vs_$Sku.exe"
+
+            $FilePath = "${env:Temp}\vs_$Sku.exe"
+            $Arguments = ('/c', $FilePath, $WorkLoads, '--quiet', '--norestart', '--wait', '--nocache' )
+
+            if ($exitCode -eq 0 -or $exitCode -eq 3010)
+            {
+            Write-Host -Object 'Installation successful'
+            return $exitCode
+            }
+            else
+            {
+            Write-Host -Object "Non zero exit code returned by the installation process : $exitCode."
+            exit $exitCode
+            }
+        }
+
+        $WorkLoads = 'modify --add Microsoft.VisualCpp.PGO.X64'
+        $Sku = 'Enterprise'
+        $VSBootstrapperURL = 'https://aka.ms/vs/15/release/vs_enterprise.exe'
+
+        $exitCode = InstallVS -WorkLoads $WorkLoads -Sku $Sku -VSBootstrapperURL $VSBootstrapperURL
+
+        exit $exitCode
 
 - job: windows_vs2015_win2012r2
   pool:

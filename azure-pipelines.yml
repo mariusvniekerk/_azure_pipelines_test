@@ -111,7 +111,7 @@ jobs:
             Invoke-WebRequest -Uri $VSBootstrapperURL -OutFile "${env:Temp}\vs_$Sku.exe"
 
             $FilePath = "${env:Temp}\vs_$Sku.exe"
-            $Arguments = ('/c', $FilePath, $WorkLoads, '--quiet', '--norestart', '--wait', )
+            $Arguments = ('/c', $FilePath, $WorkLoads, '--quiet', '--norestart', '--wait')
 
             Write-Host "Starting Install ..."
             $process = Start-Process -FilePath cmd.exe -ArgumentList $Arguments -Wait -PassThru

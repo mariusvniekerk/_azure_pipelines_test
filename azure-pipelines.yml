@@ -70,6 +70,10 @@ jobs:
   steps:
   - script: WMIC CPU Get /Format:List
     displayName: cpu info
+  - script: |
+      echo %PATH%
+      echo %PATH:C:\ProgramData\Chocolatey\bin\;=%
+    displayName: cpu info
 
   - script: |
       echo Add other tasks to build, test, and deploy your project.

@@ -72,7 +72,7 @@ jobs:
     displayName: cpu info
   - script: |
       echo %PATH%
-      echo %PATH:C:\ProgramData\Chocolatey\bin\;=%
+      echo %PATH:C:\ProgramData\Chocolatey\bin;=%
     displayName: cpu info
 
   - script: |

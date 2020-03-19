@@ -74,7 +74,8 @@ jobs:
       setlocal ENABLEDELAYEDEXPANSION
       set CI=azure
       echo %PATH%
-      if "%CI%" == azure (
+      if "%CI%" == "azure" (
+          echo "123"
           set "PATH=%PATH:C:\ProgramData\Chocolatey\bin;=%"
           set "PATH=%PATH:C:\Program Files (x86)\sbt\bin;=%"
           set "PATH=%PATH:C:\Rust\.cargo\bin;=%"

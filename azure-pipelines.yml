@@ -71,6 +71,7 @@ jobs:
   - script: WMIC CPU Get /Format:List
     displayName: cpu info
   - script: |
+      setlocal ENABLEDELAYEDEXPANSION
       set CI=azure
       echo %PATH%
       if "%CI%" == azure (

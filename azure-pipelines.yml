@@ -38,6 +38,7 @@ jobs:
   - script: sysctl -a 
     displayName: 'Run a one-line script'
   - script: |
+       echo $PATH
        sudo rm -rf "/usr/local/Caskroom"
        sudo rm -rf "/usr/local/Cellar"
        sudo rm -rf "/usr/local/Homebrew"

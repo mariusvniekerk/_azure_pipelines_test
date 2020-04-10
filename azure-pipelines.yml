@@ -39,9 +39,9 @@ jobs:
     displayName: 'Run a one-line script'
   - script: |
        echo $PATH
-       sudo mkdir -p /usr/local_moved
+       mkdir -p $HOME/local_moved
        for f in $(sudo find /usr/ -depth 1 -type d -not -name "miniconda"); do
-           sudo mv $f /usr/local_moved/$(basename $f)
+           sudo mv $f $HOME/local_moved/$(basename $f)
        done
        find /usr/local -type d -depth 1
        find /usr/local -type d -depth 2

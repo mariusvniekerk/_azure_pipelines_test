@@ -43,8 +43,7 @@ jobs:
        for f in $(sudo find /usr/local -depth 1 -type d -not -name "miniconda"); do
            sudo mv $f $HOME/local_moved/$(basename $f)
        done
-       find /usr/local -type d -depth 1
-       find /usr/local -type d -depth 2
+       ls -al /usr/local
     displayName: 'Run a multi-line script'
 
 #- job: osx_conda_forge_internal

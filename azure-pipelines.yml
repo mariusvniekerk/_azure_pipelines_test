@@ -37,8 +37,18 @@ jobs:
   steps:
   - script: sysctl -a 
     displayName: 'Run a one-line script'
-  - script: ls -alR /usr/local
-    displayName: 'Run a one-line script'
+  - script: |
+       rm -rf "/usr/local/Caskroom"
+       rm -rf "/usr/local/Cellar"
+       rm -rf "/usr/local/Homebrew"
+       rm -rf "/usr/local/lib/gcc"
+       rm -rf "/usr/local/lib/perl5"
+       rm -rf "/usr/local/lib/perl6"
+       rm -rf "/usr/local/lib/perl7"
+       rm -rf "/usr/local/include/c++"
+       rm -rf "/usr/local/Frameworks/Python.framework"
+       ls -alR /usr/local
+    displayName: 'Run a multi-line script'
 
 #- job: osx_conda_forge_internal
 #  pool:

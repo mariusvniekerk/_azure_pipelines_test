@@ -33,17 +33,19 @@ jobs:
 
 - job: osx
   pool:
-    vmImage: 'macOS-10.13'
+    vmImage: 'macOS-10.14'
   steps:
   - script: sysctl -a 
+    displayName: 'Run a one-line script'
+  - script: ls -alR /usr/local
     displayName: 'Run a one-line script'
 
-- job: osx_conda_forge_internal
-  pool:
-    name: 'conda-forge-internal-osx'
-  steps:
-  - script: sysctl -a 
-    displayName: 'Run a one-line script'
+#- job: osx_conda_forge_internal
+#  pool:
+#    name: 'conda-forge-internal-osx'
+#  steps:
+#  - script: sysctl -a 
+#    displayName: 'Run a one-line script'
 
 - job: Vs2019_Server2019
   pool:

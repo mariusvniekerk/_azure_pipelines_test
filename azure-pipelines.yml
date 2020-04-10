@@ -47,7 +47,7 @@ jobs:
        sudo rm -rf "/usr/local/lib/perl7"
        sudo rm -rf "/usr/local/include/c++"
        sudo rm -rf "/usr/local/Frameworks/Python.framework"
-       ls -alR /usr/local
+       find /usr/local -type d -depth 2
     displayName: 'Run a multi-line script'
 
 #- job: osx_conda_forge_internal

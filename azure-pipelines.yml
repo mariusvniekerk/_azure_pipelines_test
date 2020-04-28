@@ -10,6 +10,8 @@ jobs:
 - job: linux
   pool:
     vmImage: 'Ubuntu-16.04'
+  variables:
+    job_variable1: 'value1'
   steps:
   - script: env
     displayName: 'Print env variables'
